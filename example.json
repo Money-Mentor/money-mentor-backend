@@ -1,0 +1,461 @@
+// { public_token: 'public-sandbox-86cd5f10-be4e-4039-b302-6523b011eca6'
+// }
+// PUBLIC_TOKEN public-sandbox-86cd5f10-be4e-4039-b302-6523b011eca6
+// Access Token: access-sandbox-14a9076d-164b-4b7c-a257-9a54b58499ec
+// Item ID: VAlqDvX4G8IMBXpRPrnMczjNngdWVMtW4voQq
+// [
+//   { account_id: 'jVw7nBeEXMFg6qxa7WbgFwZKqX1L1bc1jLrZR',
+//     balances: { available: 100,
+//        current: 110,
+//        iso_currency_code: 'USD',
+//        limit: null,
+//        unofficial_currency_code: null
+//     },
+//     mask: '0000',
+//     name: 'Plaid Checking',
+//     official_name: 'Plaid Gold Standard 0% Interest Checking',
+//     subtype: 'checking',
+//     type: 'depository'
+//   },
+//   { account_id: 'Ppm7DvyzXMtPAgdK3RnPHNR3GJMnMwF7nWpQA',
+//     balances: { available: 200,
+//        current: 210,
+//        iso_currency_code: 'USD',
+//        limit: null,
+//        unofficial_currency_code: null
+//     },
+//     mask: '1111',
+//     name: 'Plaid Saving',
+//     official_name: 'Plaid Silver Standard 0.1% Interest Saving',
+//     subtype: 'savings',
+//     type: 'depository'
+//   },
+//   { account_id: 'eVbwWlqEQjF9XWMRPEo9tK7wNAe8eafLX5o7B',
+//     balances: { available: null,
+//        current: 1000,
+//        iso_currency_code: 'USD',
+//        limit: null,
+//        unofficial_currency_code: null
+//     },
+//     mask: '2222',
+//     name: 'Plaid CD',
+//     official_name: 'Plaid Bronze Standard 0.2% Interest CD',
+//     subtype: 'cd',
+//     type: 'depository'
+//   },
+//   { account_id: '7A8XD7Jq31IxeqPLAJ8xc7mQ5NELEpTgan7Mb',
+//     balances: { available: null,
+//        current: 410,
+//        iso_currency_code: 'USD',
+//        limit: 2000,
+//        unofficial_currency_code: null
+//     },
+//     mask: '3333',
+//     name: 'Plaid Credit Card',
+//     official_name: 'Plaid Diamond 12.5% APR Interest Credit Card',
+//     subtype: 'credit card',
+//     type: 'credit'
+//   }
+// ]
+// [
+//   { account_id: 'jVw7nBeEXMFg6qxa7WbgFwZKqX1L1bc1jLrZR',
+//     balances: { available: 100,
+//        current: 110,
+//        iso_currency_code: 'USD',
+//        limit: null,
+//        unofficial_currency_code: null
+//     },
+//     mask: '0000',
+//     name: 'Plaid Checking',
+//     official_name: 'Plaid Gold Standard 0% Interest Checking',
+//     subtype: 'checking',
+//     type: 'depository'
+//   },
+//   { account_id: 'Ppm7DvyzXMtPAgdK3RnPHNR3GJMnMwF7nWpQA',
+//     balances: { available: 200,
+//        current: 210,
+//        iso_currency_code: 'USD',
+//        limit: null,
+//        unofficial_currency_code: null
+//     },
+//     mask: '1111',
+//     name: 'Plaid Saving',
+//     official_name: 'Plaid Silver Standard 0.1% Interest Saving',
+//     subtype: 'savings',
+//     type: 'depository'
+//   },
+//   { account_id: 'eVbwWlqEQjF9XWMRPEo9tK7wNAe8eafLX5o7B',
+//     balances: { available: null,
+//        current: 1000,
+//        iso_currency_code: 'USD',
+//        limit: null,
+//        unofficial_currency_code: null
+//     },
+//     mask: '2222',
+//     name: 'Plaid CD',
+//     official_name: 'Plaid Bronze Standard 0.2% Interest CD',
+//     subtype: 'cd',
+//     type: 'depository'
+//   },
+//   { account_id: '7A8XD7Jq31IxeqPLAJ8xc7mQ5NELEpTgan7Mb',
+//     balances: { available: null,
+//        current: 410,
+//        iso_currency_code: 'USD',
+//        limit: 2000,
+//        unofficial_currency_code: null
+//     },
+//     mask: '3333',
+//     name: 'Plaid Credit Card',
+//     official_name: 'Plaid Diamond 12.5% APR Interest Credit Card',
+//     subtype: 'credit card',
+//     type: 'credit'
+//   }
+// ]
+// pulled 15 transactions
+// ^C
+// Sharons-MacBook-Pro:node sharonyun$ node index.js
+// plaid-walkthrough server listening on port 8000
+// ******* request.body { public_token: 'public-sandbox-ce42db04-9cb0-42ad-b0d2-36b00f04f4aa'
+// }
+// PUBLIC_TOKEN public-sandbox-ce42db04-9cb0-42ad-b0d2-36b00f04f4aa
+// Access Token: access-sandbox-bb5e202e-7fe3-4e9a-8fd2-3fb9b69afedb
+// Item ID: NXmgzlpjJKfppqlaNkQNhMnJymA9RZFWvzo1Q
+// pulled 15 transactions
+// { accounts: [
+//     { account_id: 'dbj8Woq31EurrRawDgADslqAANKkvMtZqamMk',
+//        balances: [Object
+//       ],
+//        mask: '0000',
+//        name: 'Plaid Checking',
+//        official_name: 'Plaid Gold Standard 0% Interest Checking',
+//        subtype: 'checking',
+//        type: 'depository'
+//     },
+//     { account_id: 'NXmgzlpjJKfppqlaNkQNhMnNNbrGvZFWzKgjZ',
+//        balances: [Object
+//       ],
+//        mask: '1111',
+//        name: 'Plaid Saving',
+//        official_name: 'Plaid Silver Standard 0.1% Interest Saving',
+//        subtype: 'savings',
+//        type: 'depository'
+//     },
+//     { account_id: '4mBG7xXk1LcPPlnQMbVMUbKrr6j4ARCdKMZrr',
+//        balances: [Object
+//       ],
+//        mask: '2222',
+//        name: 'Plaid CD',
+//        official_name: 'Plaid Bronze Standard 0.2% Interest CD',
+//        subtype: 'cd',
+//        type: 'depository'
+//     },
+//     { account_id: 'aD49g1wrQpuLL73JywXyUAPGGQL3p5c7v3zaE',
+//        balances: [Object
+//       ],
+//        mask: '3333',
+//        name: 'Plaid Credit Card',
+//        official_name: 'Plaid Diamond 12.5% APR Interest Credit Card',
+//        subtype: 'credit card',
+//        type: 'credit'
+//     }
+//   ],
+//   item: { available_products: [ 'auth', 'balance'
+//     ],
+//      billed_products: [ 'transactions'
+//     ],
+//      error: null,
+//      institution_id: 'ins_5',
+//      item_id: 'NXmgzlpjJKfppqlaNkQNhMnJymA9RZFWvzo1Q',
+//      webhook: ''
+//   },
+//   request_id: 'vwznq',
+//   total_transactions: 15,
+//   transactions: [
+//     { account_id: 'NXmgzlpjJKfppqlaNkQNhMnNNbrGvZFWzKgjZ',
+//        account_owner: null,
+//        amount: -4.22,
+//        category: [Array
+//       ],
+//        category_id: '13005000',
+//        date: '2018-06-20',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'INTRST PYMNT',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: 'wZyJadLXvEC77eEgWj9WiDGQbJmr9vFr97KD9',
+//        transaction_type: 'place',
+//        unofficial_currency_code: null
+//     },
+//     { account_id: 'aD49g1wrQpuLL73JywXyUAPGGQL3p5c7v3zaE',
+//        account_owner: null,
+//        amount: 500,
+//        category: [Array
+//       ],
+//        category_id: '22001000',
+//        date: '2018-06-10',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'United Airlines',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: '6DxdQaVbplu55KkPjWmjFDoB7REqLkFgJonMW',
+//        transaction_type: 'special',
+//        unofficial_currency_code: null
+//     },
+//     { account_id: 'dbj8Woq31EurrRawDgADslqAANKkvMtZqamMk',
+//        account_owner: null,
+//        amount: 6.33,
+//        category: [Array
+//       ],
+//        category_id: '22006001',
+//        date: '2018-06-08',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'Uber 072515 SF**POOL**',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: 'mxobRm4XvyFzzgMDQpGQHmw3D1aRE8CLjv8wy',
+//        transaction_type: 'special',
+//        unofficial_currency_code: null
+//     },
+//     { account_id: 'aD49g1wrQpuLL73JywXyUAPGGQL3p5c7v3zaE',
+//        account_owner: null,
+//        amount: 500,
+//        category: [Array
+//       ],
+//        category_id: '13005000',
+//        date: '2018-06-05',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'Tectra Inc',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: 'RnkodzEyq3CJJMz6b9vbCE86jqQZpbcRjv5rv',
+//        transaction_type: 'place',
+//        unofficial_currency_code: null
+//     },
+//     { account_id: 'aD49g1wrQpuLL73JywXyUAPGGQL3p5c7v3zaE',
+//        account_owner: null,
+//        amount: 500,
+//        category: [Array
+//       ],
+//        category_id: '13005000',
+//        date: '2018-06-04',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'KFC',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: 'vQmAdx1WvXsjj8pXzx5zSzyKMNl5GdiWx3V4D',
+//        transaction_type: 'place',
+//        unofficial_currency_code: null
+//     },
+//     { account_id: 'aD49g1wrQpuLL73JywXyUAPGGQL3p5c7v3zaE',
+//        account_owner: null,
+//        amount: 500,
+//        category: [Array
+//       ],
+//        category_id: '19007000',
+//        date: '2018-06-04',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'Madison Bicycle Shop',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: '9X4K1PlMJrfllBynj4vjIVB9ym4zjquR8WMbp',
+//        transaction_type: 'place',
+//        unofficial_currency_code: null
+//     },
+//     { account_id: 'NXmgzlpjJKfppqlaNkQNhMnNNbrGvZFWzKgjZ',
+//        account_owner: null,
+//        amount: 25,
+//        category: [Array
+//       ],
+//        category_id: '16001000',
+//        date: '2018-05-26',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'CREDIT CARD 3333 PAYMENT *//',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: 'VJVrPdnyB4FXXldjKQ1KTGw4kV9ZEWSWk8NLm',
+//        transaction_type: 'special',
+//        unofficial_currency_code: null
+//     },
+//     { account_id: 'dbj8Woq31EurrRawDgADslqAANKkvMtZqamMk',
+//        account_owner: null,
+//        amount: 5.4,
+//        category: [Array
+//       ],
+//        category_id: '22006001',
+//        date: '2018-05-26',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'Uber 063015 SF**POOL**',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: 'bnNgkL5zZECPPDe3xXRxUemPZ4167WIVL4ryK',
+//        transaction_type: 'special',
+//        unofficial_currency_code: null
+//     },
+//     { account_id: '4mBG7xXk1LcPPlnQMbVMUbKrr6j4ARCdKMZrr',
+//        account_owner: null,
+//        amount: 1000,
+//        category: [Array
+//       ],
+//        category_id: '21007000',
+//        date: '2018-05-25',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'CD DEPOSIT .INITIAL.',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: 'XJqB74mVxPFBB14dX9zXFPVxgXr3eLFdgW8zQ',
+//        transaction_type: 'special',
+//        unofficial_currency_code: null
+//     },
+//     { account_id: 'aD49g1wrQpuLL73JywXyUAPGGQL3p5c7v3zaE',
+//        account_owner: null,
+//        amount: 78.5,
+//        category: [Array
+//       ],
+//        category_id: '17018000',
+//        date: '2018-05-24',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'Touchstone Climbing',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: 'y1v5N4oWwqSvvoyXx4axi3B6zxkaZoTydqpLR',
+//        transaction_type: 'place',
+//        unofficial_currency_code: null
+//     },
+//     { account_id: 'dbj8Woq31EurrRawDgADslqAANKkvMtZqamMk',
+//        account_owner: null,
+//        amount: -500,
+//        category: [Array
+//       ],
+//        category_id: '22001000',
+//        date: '2018-05-24',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'United Airlines',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: 'ndgwlyNQvECkkwD63eo3CezZjodvb9I6kygp9',
+//        transaction_type: 'special',
+//        unofficial_currency_code: null
+//     },
+//     { account_id: 'dbj8Woq31EurrRawDgADslqAANKkvMtZqamMk',
+//        account_owner: null,
+//        amount: 12,
+//        category: [Array
+//       ],
+//        category_id: '13005000',
+//        date: '2018-05-23',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'McDonald\'s',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: 'AXMpALdkJNfddj3nqDVqTlxLwZAPrgC1wX3K5',
+//        transaction_type: 'place',
+//        unofficial_currency_code: null
+//     },
+//     { account_id: 'dbj8Woq31EurrRawDgADslqAANKkvMtZqamMk',
+//        account_owner: null,
+//        amount: 4.33,
+//        category: [Array
+//       ],
+//        category_id: '13005043',
+//        date: '2018-05-23',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'Starbucks',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: 'GX8o9W7xJZf773PxovmoiMnQawK67Xi19eRr7',
+//        transaction_type: 'place',
+//        unofficial_currency_code: null
+//     },
+//     { account_id: 'dbj8Woq31EurrRawDgADslqAANKkvMtZqamMk',
+//        account_owner: null,
+//        amount: 89.4,
+//        category: [Array
+//       ],
+//        category_id: '13005000',
+//        date: '2018-05-22',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'SparkFun',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: 'Wnlzjaby3NCLLwaErygrUVJyAbWjnXulMmqAE',
+//        transaction_type: 'place',
+//        unofficial_currency_code: null
+//     },
+//     { account_id: 'NXmgzlpjJKfppqlaNkQNhMnNNbrGvZFWzKgjZ',
+//        account_owner: null,
+//        amount: -4.22,
+//        category: [Array
+//       ],
+//        category_id: '13005000',
+//        date: '2018-05-21',
+//        iso_currency_code: 'USD',
+//        location: [Object
+//       ],
+//        name: 'INTRST PYMNT',
+//        payment_meta: [Object
+//       ],
+//        pending: false,
+//        pending_transaction_id: null,
+//        transaction_id: 'DXpVbgNzJ7fNNQmx8q98hWaZePyAbXFvePG9o',
+//        transaction_type: 'place',
+//        unofficial_currency_code: null
+//     }
+//   ],
+//   status_code: 200
+// }

@@ -1,5 +1,5 @@
 {
-  "name": "boilermaker",
+  "name": "moneymentor-backend",
   "version": "1.0.0",
   "description": "Some boilerplate code to get you started - get shakin'!",
   "engines": {
@@ -28,11 +28,13 @@
     "express": "^4.14.1",
     "express-session": "^1.15.1",
     "history": "^4.6.3",
+    "moment": "^2.22.2",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
     "pg": "^6.1.2",
     "pg-hstore": "^2.3.2",
+    "plaid": "^2.6.2",
     "prop-types": "^15.5.8",
     "react": "^16.3.1",
     "react-dom": "^16.0.0",
