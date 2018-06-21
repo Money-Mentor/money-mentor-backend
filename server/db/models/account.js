@@ -1,14 +1,17 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const Account = db.define('account', {
   account_id: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
   // This will be balances.current in Plaid's response
-  balance: {
-    type: Sequelize.INTEGER
-  }
-})
+  current_balance: {
+    type: Sequelize.INTEGER,
+  },
+  available_balance: {
+    type: Sequelize.INTEGER,
+  },
+});
 
-module.exports = Account
+module.exports = Account;

@@ -21,9 +21,6 @@ Account.belongsTo(Item);
 Transaction.belongsToMany(Category, { through: 'transactionCategory' });
 Category.belongsToMany(Transaction, { through: 'transactionCategory' });
 
-Account.hasMany(Transaction);
-Transaction.belongsTo(Account);
-
 User.hasMany(Transaction);
 Transaction.belongsTo(User);
 
