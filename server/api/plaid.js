@@ -5,6 +5,8 @@ const moment = require('moment');
 const plaid = require('plaid');
 
 const Item = require('../db/models/item');
+const Account = require('../db/models/account');
+const Transaction = require('../db/models/transaction');
 module.exports = router;
 
 // const APP_PORT = envvar.number('APP_PORT', 8000);
@@ -24,41 +26,50 @@ const plaidClient = new plaid.Client(
   plaid.environments[PLAID_ENV]
 );
 
+router.put('/', async (req, res, next) => {
+  const access_token = await Item.findOne({
+    where: { userId: req.user.id },
+  });
+});
+
 router.post('/plaid_exchange', async (req, res, next) => {
   let ACCESS_TOKEN = 'null';
   let ITEM_ID = null;
+  const user = req.body.user;
 
   try {
     /*-----------get public token fron frontend------------------*/
-    console.log('req.body=======', req.body);
     let publicToken = req.body.public_token;
 
-    const user = req.body.user;
     /*--------exchange public token for accesstoken and itemID-----------*/
     await plaidClient.exchangePublicToken(
       publicToken,
       async (error, tokenResponse) => {
-        console.log('tokenResponse====', tokenResponse);
         if (error !== null) {
           var msg = 'Could not exchange public_token!';
           console.log(msg + '\n' + error);
-          // tokenResponse.send({ error: msg });
         }
         ACCESS_TOKEN = tokenResponse.access_token;
         ITEM_ID = tokenResponse.item_id;
-        // console.log('Access Token: ' + ACCESS_TOKEN);
-        // console.log('Item ID: ' + ITEM_ID);
 
-        await Item.create({
+        //saving  ITEM (BANK INFORMATION) to our database
+        const item = await Item.create({
           accessToken: ACCESS_TOKEN,
           bank: ITEM_ID,
           userId: user.id,
         });
 
-        /*------------------------get all accounts---------------------*/
-        const getAccount = await plaidClient.getAccounts(
+        /*-------------get ACOUNTS & TRANSACTIONS details from the last 2 months-----------*/
+        let startDate = moment()
+          .subtract(60, 'days')
+          .format('YYYY-MM-DD');
+        let endDate = moment().format('YYYY-MM-DD');
+
+        await plaidClient.getTransactions(
           ACCESS_TOKEN,
-          (err, res) => {
+          startDate,
+          endDate,
+          async (err, transactionRes) => {
             if (err !== null) {
               if (plaid.isPlaidError(err)) {
                 // This is a Plaid error
@@ -68,40 +79,56 @@ router.post('/plaid_exchange', async (req, res, next) => {
                 console.log(err.toString());
               }
             }
-        // save it in our backend
+
+            //saving  ACCOUNT to our database
+            allAccounts = transactionRes.accounts.map(
+              async account => {
+                const mappedAccount = await Account.create({
+                  account_id: account.account_id,
+                  current_balance: account.balances.current,
+                  available_balance: account.balances.available,
+                  itemId: item.id,
+                  userId: user.id,
+                  name: account.name,
+                });
+                return mappedAccount;
+              }
+            );
+
+            //saving  TRANSACTION to our database
+            allTrans = transactionRes.transactions.map(
+              async transaction => {
+                const mappedTrans = await Transaction.create({
+                  amount: transaction.amount,
+                  name: transaction.name,
+                  date: transaction.date,
+                  accountId: transaction.account_id,
+                  userId: user.id,
+                  category1: transaction.category[0],
+                  category2: transaction.category[1],
+                });
+                return mappedTrans;
+              }
+            );
           }
         );
+
       }
-    )
+    );
 
-    // const accessToken = response.access_token;
-    // const itemId = response.item_id;
-    // console.log('acessToken: ', accessToken, 'itemId: ', itemId);
+    const accounts = await Account.findAll({
+      where: {
+        userId: user.id
+      }
+    });
 
-    //we save it in our back end for user sequelize query
-    // let user = req.user;
+    const trans = await Transaction.findAll({
+      where: {
+        userId: user.id
+      }
+    });
 
-    // /*------------------------get all accounts---------------------*/
-    // const getAccount = await plaidClient.getAccounts(ACCESS_TOKEN, callback);
-    // // save it in our backend
-
-    // console.log(getAccount);
-
-    /*------------------------get all account balances---------------------*/
-    // const getBalance = await plaidClient.getBalance(accessToken, callback);
-    //save it in our backend
-
-    /*-------------get transaction details from the last 2 months-----------*/
-    let startDate = moment()
-      .subtract(60, 'days')
-      .format('YYYY-MM-DD');
-    let endDate = moment().format('YYYY-MM-DD');
-    // const getTransactions = await plaidClient.getTransactions(
-    //   accessToken,
-    //   startDate,
-    //   endDate,
-    //   callback
-    // );
+    res.json({accounts, trans})
   } catch (err) {
     // Indicates plaid API error
     console.log('/exchange token returned an error', {

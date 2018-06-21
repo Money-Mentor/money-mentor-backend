@@ -1,6 +1,5 @@
 const User = require('./user');
 const Account = require('./account');
-const Category = require('./category');
 const Item = require('./item');
 const Transaction = require('./transaction');
 /**
@@ -18,12 +17,6 @@ Account.belongsTo(User);
 Item.hasMany(Account);
 Account.belongsTo(Item);
 
-Transaction.belongsToMany(Category, { through: 'transactionCategory' });
-Category.belongsToMany(Transaction, { through: 'transactionCategory' });
-
-Account.hasMany(Transaction);
-Transaction.belongsTo(Account);
-
 User.hasMany(Transaction);
 Transaction.belongsTo(User);
 
@@ -36,7 +29,6 @@ Transaction.belongsTo(User);
 module.exports = {
   User,
   Account,
-  Category,
   Item,
   Transaction,
 };
