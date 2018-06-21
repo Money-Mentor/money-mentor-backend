@@ -26,21 +26,26 @@ const plaidClient = new plaid.Client(
   plaid.environments[PLAID_ENV]
 );
 
+router.put('/', async (req, res, next) => {
+  const access_token = await Item.findOne({
+    where: { userId: req.user.id },
+  });
+});
+
 router.post('/plaid_exchange', async (req, res, next) => {
   let ACCESS_TOKEN = 'null';
   let ITEM_ID = null;
   const user = req.body.user;
+  let allTrans, allAccounts;
 
   try {
     /*-----------get public token fron frontend------------------*/
-    console.log('req.body=======', req.body);
     let publicToken = req.body.public_token;
 
     /*--------exchange public token for accesstoken and itemID-----------*/
     await plaidClient.exchangePublicToken(
       publicToken,
       async (error, tokenResponse) => {
-        console.log('tokenResponse====', tokenResponse);
         if (error !== null) {
           var msg = 'Could not exchange public_token!';
           console.log(msg + '\n' + error);
@@ -55,31 +60,7 @@ router.post('/plaid_exchange', async (req, res, next) => {
           userId: user.id,
         });
 
-        // /*------------------------get all accounts---------------------*/
-        // await plaidClient.getAccounts(ACCESS_TOKEN, (err, accountRes) => {
-        //   if (err !== null) {
-        //     if (plaid.isPlaidError(err)) {
-        //       // This is a Plaid error
-        //       console.log(err.error_code + ': ' + err.error_message);
-        //     } else {
-        //       // This is a connection error, an Error object
-        //       console.log(err.toString());
-        //     }
-        //   }
-
-        //   //saving  ACCOUNTS to our database
-        //   accountRes.accounts.map(async account => {
-        //     await Account.create({
-        //       account_id: account.account_id,
-        //       current_balance: account.balances.current,
-        //       available_balance: account.balances.available,
-        //       userId: user.id,
-        //       itemId: item.id,
-        //     });
-        //   });
-        // });
-
-        /*-------------get transaction details from the last 2 months-----------*/
+        /*-------------get ACOUNTS & TRANSACTIONS details from the last 2 months-----------*/
         let startDate = moment()
           .subtract(60, 'days')
           .format('YYYY-MM-DD');
@@ -89,7 +70,7 @@ router.post('/plaid_exchange', async (req, res, next) => {
           ACCESS_TOKEN,
           startDate,
           endDate,
-          (err, transactionRes) => {
+          async (err, transactionRes) => {
             if (err !== null) {
               if (plaid.isPlaidError(err)) {
                 // This is a Plaid error
@@ -100,29 +81,55 @@ router.post('/plaid_exchange', async (req, res, next) => {
               }
             }
 
-            transactionRes.accounts.map(async account => {
-              await Account.create({
-                account_id: account.account_id,
-                current_balance: account.balances.current,
-                available_balance: account.balances.available,
-                userId: user.id,
-                itemId: item.id,
-              });
-            });
+            //saving  ACCOUNT to our database
+            allAccounts = transactionRes.accounts.map(
+              async account => {
+                const mappedAccount = await Account.create({
+                  account_id: account.account_id,
+                  current_balance: account.balances.current,
+                  available_balance: account.balances.available,
+                  itemId: item.id,
+                  userId: user.id,
+                  name: account.name,
+                });
+                return mappedAccount;
+              }
+            );
 
-            transactionRes.transactions.map(async transaction => {
-              await Transaction.create({
-                amount: transaction.amount,
-                name: transaction.name,
-                date: transaction.date,
-                accountId: transaction.account_id,
-                userId: user.id,
-              });
-            });
+            //saving  TRANSACTION to our database
+            allTrans = transactionRes.transactions.map(
+              async transaction => {
+                const mappedTrans = await Transaction.create({
+                  amount: transaction.amount,
+                  name: transaction.name,
+                  date: transaction.date,
+                  accountId: transaction.account_id,
+                  userId: user.id,
+                  category1: transaction.category[0],
+                  category2: transaction.category[1],
+                });
+                return mappedTrans;
+              }
+            );
           }
         );
+
       }
     );
+
+    const accounts = await Account.findAll({
+      where: {
+        userId: req.body.user.id
+      }
+    });
+
+    const trans = await Transaction.findAll({
+      where: {
+        userId: req.body.user.id
+      }
+    });
+
+    res.json({accounts, trans})
   } catch (err) {
     // Indicates plaid API error
     console.log('/exchange token returned an error', {

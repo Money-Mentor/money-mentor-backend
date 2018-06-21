@@ -12,6 +12,9 @@ const Account = db.define('account', {
   available_balance: {
     type: Sequelize.INTEGER,
   },
+  name: {
+    type: Sequelize.STRING,
+  }
 });
 
 module.exports = Account;

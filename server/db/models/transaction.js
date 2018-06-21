@@ -14,6 +14,12 @@ const Transaction = db.define('transaction', {
   accountId: {
     type: Sequelize.STRING,
   },
+  category1: {
+    type: Sequelize.STRING,
+  },
+  category2: {
+    type: Sequelize.STRING,
+  },
 });
 
 module.exports = Transaction;
