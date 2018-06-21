@@ -36,7 +36,6 @@ router.post('/plaid_exchange', async (req, res, next) => {
   let ACCESS_TOKEN = 'null';
   let ITEM_ID = null;
   const user = req.body.user;
-  let allTrans, allAccounts;
 
   try {
     /*-----------get public token fron frontend------------------*/
@@ -119,13 +118,13 @@ router.post('/plaid_exchange', async (req, res, next) => {
 
     const accounts = await Account.findAll({
       where: {
-        userId: req.body.user.id
+        userId: user.id
       }
     });
 
     const trans = await Transaction.findAll({
       where: {
-        userId: req.body.user.id
+        userId: user.id
       }
     });
 
