@@ -1,29 +1,31 @@
-const User = require('./user')
-const Account = require('./account')
-const Category = require('./category')
-const Item = require('./item')
-const Transaction = require('./transaction')
+const User = require('./user');
+const Account = require('./account');
+const Category = require('./category');
+const Item = require('./item');
+const Transaction = require('./transaction');
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
  *
  *    BlogPost.belongsTo(User)
  */
+User.hasMany(Item);
+Item.belongsTo(User);
 
-User.hasMany(Account)
-Account.belongsTo(User)
+User.hasMany(Account);
+Account.belongsTo(User);
 
-Item.hasMany(Account)
-Account.belongsTo(Item)
+Item.hasMany(Account);
+Account.belongsTo(Item);
 
-Transaction.belongsToMany(Category, { through: 'transactionCategory' })
-Category.belongsToMany(Transaction, { through: 'transactionCategory' })
+Transaction.belongsToMany(Category, { through: 'transactionCategory' });
+Category.belongsToMany(Transaction, { through: 'transactionCategory' });
 
-Account.hasMany(Transaction)
-Transaction.belongsTo(Account)
+Account.hasMany(Transaction);
+Transaction.belongsTo(Account);
 
-User.hasMany(Transaction)
-Transaction.belongsTo(User)
+User.hasMany(Transaction);
+Transaction.belongsTo(User);
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -36,5 +38,5 @@ module.exports = {
   Account,
   Category,
   Item,
-  Transaction
-}
+  Transaction,
+};
