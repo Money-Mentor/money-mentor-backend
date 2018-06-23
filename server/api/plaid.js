@@ -31,10 +31,10 @@ const plaidClient = new plaid.Client(
 router.put('/', async (req, res, next) => {              // put/:userid  maybe req.params.userid????
   console.log('req.body', req.body)
   const item = await Item.findOne({        
-    where: { userId: req.body.user.id },
+    where: { userId: req.user.id },
   });
   const ACCESS_TOKEN = item.accessToken
-  const user = req.body.user;
+  const user = req.user;
 
   let startDate = item.createdAt.toISOString().slice(0, 10)
   let endDate = moment().format('YYYY-MM-DD');
@@ -121,7 +121,7 @@ router.put('/', async (req, res, next) => {              // put/:userid  maybe r
 router.post('/plaid_exchange', async (req, res, next) => {
   let ACCESS_TOKEN = 'null';
   let ITEM_ID = null;
-  const user = req.body.user;
+  const user = req.user;
 
   try {
     /*-----------get public token fron frontend------------------*/
