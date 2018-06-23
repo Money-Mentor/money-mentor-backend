@@ -28,6 +28,7 @@ const plaidClient = new plaid.Client(
 
 // when user opens app - should see most current trans/data & saving it into the db
 // should be data in between last login & current day
+
 router.put('/', async (req, res, next) => {
   // put/:userid  maybe req.params.userid????
   console.log('req.body', req.body);
@@ -35,6 +36,7 @@ router.put('/', async (req, res, next) => {
     where: { userId: req.user.id }
   });
   const ACCESS_TOKEN = item.accessToken;
+
   const user = req.user;
 
   let startDate = item.createdAt.toISOString().slice(0, 10);
