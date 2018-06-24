@@ -16,14 +16,26 @@ router.get('/', (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     // const user = req.user;
-    const user = await User.findById(req.params.id);
+    let user = await User.findById(req.params.id);
     console.log('req.body should be updated user', req.body);
     if (!user) {
       res.sendStatus(404);
     }
-    const updatedUser = await user.update(req.body);
-    console.log('updatedUser in backend -------------', updatedUser);
-    res.json(updatedUser);
+
+    // const updatedUser = await user.update({
+    //   personalityType: req.body.personalityType
+    // });
+    // user.personalityType = req.body.personalityType;
+    // user = await user.save();
+    // console.log('updatedUser in backend -------------', user);
+    // res.json(user);
+
+    user
+      .update({
+        personalityType: req.body.personalityType
+      })
+      .then(() => {});
+    res.json(user);
   } catch (err) {
     next(err);
   }
