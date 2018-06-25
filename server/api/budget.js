@@ -2,12 +2,13 @@ const router = require('express').Router();
 const { User, Budget } = require('../db/models');
 module.exports = router;
 
-// /api/budget/:userId
-router.put('/:id', async (req, res, next) => {
+// PUT: /api/budget - update budget
+router.put('/', async (req, res, next) => {
   try {
+    const user = req.user
     const budget = await Budget.findOne({
       where: {
-        userId: req.params.id
+        userId: user.id
       }
     });
     if (!budget) res.sendStatus(404);
@@ -17,3 +18,19 @@ router.put('/:id', async (req, res, next) => {
     next(err);
   }
 });
+
+// GET: /api/budget - retrieve budget
+router.get('/', async (req, res, next) => {
+  try {
+    const user = req.user
+    const budget = await Budget.findOne({
+      where: {
+        userId: user.id
+      }
+    });
+    if (!budget) res.sendStatus(404)
+    res.json(budget);
+  } catch (err) {
+    next(err);
+  }
+})
