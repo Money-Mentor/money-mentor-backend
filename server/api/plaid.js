@@ -7,6 +7,7 @@ const plaid = require('plaid');
 const Item = require('../db/models/item');
 const Account = require('../db/models/account');
 const Transaction = require('../db/models/transaction');
+const Budget = require('../db/models/budget');
 module.exports = router;
 
 // const APP_PORT = envvar.number('APP_PORT', 8000);
@@ -206,7 +207,13 @@ router.post('/plaid_exchange', async (req, res, next) => {
       }
     });
 
-    res.json({ accounts, trans });
+    const budget = await Budget.findAll({
+      where: {
+        userId: user.id
+      }
+    });
+
+    res.json({ accounts, trans, budget });
   } catch (err) {
     // Indicates plaid API error
     console.log('/exchange token returned an error', {
