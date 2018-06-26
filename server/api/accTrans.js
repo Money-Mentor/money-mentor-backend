@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const Account = require('../db/models/account');
 const Transaction = require('../db/models/transaction');
+const Budget = require('../db/models/budget')
 
 module.exports = router
 
@@ -19,7 +20,12 @@ router.get('/', async (req, res, next) => {
         userId: user.id
       }
     });
-    console.log("what is res.json", accounts, trans)
-    res.json({accounts, trans})
+    const budget = await Budget.findOne({
+      where: {
+        userId: user.id
+      }
+    })
+    console.log("this is the budget", budget)
+    res.json({accounts, trans, budget})
   } catch (err) { next(err) }
 })
