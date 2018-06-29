@@ -5,7 +5,7 @@ module.exports = router;
 
 router.post('/login', (req, res, next) => {
   // EXPECT req.body TO ALSO HAVE pushToken
-  console.log('PUSH TOKEN ===============================', req.body.pushToken);
+  console.log('PUSH TOKEN ===============================', req.body);
 
   User.findOne({ where: { email: req.body.email } })
     .then(user => {
