@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
         userId: user.id
       }
     });
-    
+
     const trans = await Transaction.findAll({
       where: {
         userId: user.id
@@ -25,7 +25,18 @@ router.get('/', async (req, res, next) => {
         userId: user.id
       }
     })
-    console.log("this is the budget", budget)
     res.json({accounts, trans, budget})
   } catch (err) { next(err) }
+})
+
+router.put('/:id', async (req, res, next) => {
+  const id = req.params.id
+
+    try {
+    const transaction = await Transaction.findById(id);
+    const newTransaction = await transaction.update(req.body);
+    res.json(newTransaction);
+  } catch (error) {
+    next(error)
+  }
 })
