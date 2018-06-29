@@ -4,6 +4,9 @@ const Budget = require('../db/models/budget');
 module.exports = router;
 
 router.post('/login', (req, res, next) => {
+  // EXPECT req.body TO ALSO HAVE pushToken
+  console.log('PUSH TOKEN ===============================', req.body.pushToken);
+
   User.findOne({ where: { email: req.body.email } })
     .then(user => {
       if (!user) {
@@ -13,6 +16,8 @@ router.post('/login', (req, res, next) => {
         console.log('Incorrect password for user:', req.body.email);
         res.status(401).send('Wrong username and/or password');
       } else {
+        // SUCCESS!  USER IS CORRECT
+        user.update({ pushToken: req.body.pushToken }); // now it's in the DB
         req.login(user, err => (err ? next(err) : res.json(user)));
       }
     })
@@ -44,3 +49,21 @@ router.get('/me', (req, res) => {
 });
 
 router.use('/google', require('./google'));
+
+// Route to save down PushToken
+// router.put('/:id', async (req, res, next) => {
+//   try {
+//     // const user = req.user;
+//     let user = await User.findById(req.params.id);
+//     if (!user) {
+//       res.sendStatus(404);
+//     }
+//     const pushToken = req.body.user.pushToken;
+//     user.update({
+//       pushToken: pushToken
+//     });
+//     res.json(user);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
