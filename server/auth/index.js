@@ -49,21 +49,3 @@ router.get('/me', (req, res) => {
 });
 
 router.use('/google', require('./google'));
-
-// Route to save down PushToken
-// router.put('/:id', async (req, res, next) => {
-//   try {
-//     // const user = req.user;
-//     let user = await User.findById(req.params.id);
-//     if (!user) {
-//       res.sendStatus(404);
-//     }
-//     const pushToken = req.body.user.pushToken;
-//     user.update({
-//       pushToken: pushToken
-//     });
-//     res.json(user);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
