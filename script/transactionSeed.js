@@ -22,52 +22,16 @@ const dateArr = [
 const mayDateArr = dateArr.map(day => may + day);
 const JuneDateArr = dateArr.map(day => june + day);
 
-const allTransactions = [
-  {
+const joyceCoffee = mayDateArr.map(day => {
+  return {
     name: 'Gregorys Coffee',
     amount: 5,
-    date: '2018-06-29',
+    date: day,
     accountId: joyceChaseCredit.account_id,
     category: 'Food and Drink',
     category2: 'Coffee Shop',
     userId: joyce.id,
-  },
-  {
-    name: 'Gregorys Coffee',
-    amount: 5,
-    date: '2018-06-28',
-    accountId: joyceChaseCredit.account_id,
-    category: 'Food and Drink',
-    category2: 'Coffee Shop',
-    userId: joyce.id,
-  },
-  {
-    name: 'Gregorys Coffee',
-    amount: 5,
-    date: '2018-06-27',
-    accountId: joyceChaseCredit.account_id,
-    category: 'Food and Drink',
-    category2: 'Coffee Shop',
-    userId: joyce.id,
-  },
-  {
-    name: 'Gregorys Coffee',
-    amount: 5,
-    date: '2018-06-25',
-    accountId: joyceChaseCredit.account_id,
-    category: 'Food and Drink',
-    category2: 'Coffee Shop',
-    userId: joyce.id,
-  },
-  {
-    name: 'Gregorys Coffee',
-    amount: 5,
-    date: '2018-06-25',
-    accountId: joyceChaseCredit.account_id,
-    category: 'Food and Drink',
-    category2: 'Coffee Shop',
-    userId: joyce.id,
-  },
-];
+  };
+});
 
 module.exports = allTransactions;
