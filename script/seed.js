@@ -1,7 +1,8 @@
 'use strict';
 
 const db = require('../server/db');
-const { User, Category, Transaction, Account } = require('../server/db/models');
+const { User, Transaction, Account, Item } = require('../server/db/models');
+const allTransactions = require('./transactionSeed')
 
 /**
  * Welcome to the seed file! This seed file uses a newer language feature called...
@@ -21,6 +22,7 @@ async function seed() {
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
 
+  /*-------------------- USERS ----------------------*/
   const joyce = await User.create({
     email: 'joyce@email.com',
     password: '123',
@@ -32,12 +34,24 @@ async function seed() {
     personalityType: 'Cash Splasher',
   });
 
+  /*-------------------- ITEMS ----------------------*/
+  const joyceItem = await Item.create({
+    bank: 'chase',
+    accessToken: 'access-sandbox-123',
+  });
+  const sheriItem = await Item.create({
+    bank: 'bank of america',
+    accessToken: 'access-sandbox-456',
+  });
+
+  /*-------------------- ACCOUNTS ----------------------*/
   const joyceChaseChecking = await Account.create({
     account_id: 'joyceChaseAccount',
     current_balance: 5000,
     available_balance: 5000,
     name: 'Chase Checking',
     userId: joyce.id,
+    bankId: joyceItem.id,
   });
   const joyceChaseCredit = await Account.create({
     account_id: 'joyceChaseCredit',
@@ -45,6 +59,7 @@ async function seed() {
     available_balance: 2000,
     name: 'Chase Credit Card',
     userId: joyce.id,
+    bankId: joyceItem.id,
   });
   const joyceChaseSaving = await Account.create({
     account_id: 'joyceChaseSaving',
@@ -56,25 +71,33 @@ async function seed() {
 
   const sheriChaseChecking = await Account.create({
     account_id: 'sheriChaseChecking',
-    current_balance: 2000,
-    available_balance: 2000,
-    name: 'Chase Checking',
+    current_balance: 4000,
+    available_balance: 4000,
+    name: 'Bank of America Checking',
     userId: sheri.id,
+    bankId: sheriItem.id,
   });
   const sheriChaseCredit = await Account.create({
     account_id: 'sheriChaseCredit',
-    current_balance: 500,
-    available_balance: 500,
-    name: 'Chase Credit Card',
+    current_balance: 3000,
+    available_balance: 3000,
+    name: 'Bank of America Credit Card',
     userId: sheri.id,
+    bankId: sheriItem.id,
   });
   const sheriChaseSaving = await Account.create({
     account_id: 'sheriChaseSaving',
-    current_balance: 1500,
-    available_balance: 1500,
-    name: 'Chase Saving',
+    current_balance: 12000,
+    available_balance: 12000,
+    name: 'Bank of America Saving',
     userId: sheri.id,
+    bankId: sheriItem.id,
   });
+
+  /*-------------------- TRANSACTIONS ---------------------*/
+  const transactions = await Promise.all(
+    allTransactions.map(transaction => Transaction.create(transaction))
+  );
 
   const users = await Promise.all([
     User.create({
@@ -84,7 +107,7 @@ async function seed() {
     User.create({ email: '1', password: '1' }),
   ]);
 
-  const transactions = await Promise.all([
+  const trans = await Promise.all(
     Transaction.create({
       name: 'Starbucks',
       amount: 10,
@@ -98,6 +121,7 @@ async function seed() {
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
   console.log(`seeded ${users.length} users`);
+  console.log(`seeded ${transactions.length} transactions`);
   console.log(`seeded successfully`);
 }
 
