@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 
-const db = require('../server/db')
-const {User, Category, Transaction} = require('../server/db/models')
+const db = require('../server/db');
+const { User, Category, Transaction, Account } = require('../server/db/models');
 
 /**
  * Welcome to the seed file! This seed file uses a newer language feature called...
@@ -15,34 +15,90 @@ const {User, Category, Transaction} = require('../server/db/models')
  * Now that you've got the main idea, check it out in practice below!
  */
 
-async function seed () {
-  await db.sync({force: true})
-  console.log('db synced!')
+async function seed() {
+  await db.sync({ force: true });
+  console.log('db synced!');
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
 
+  const joyce = await User.create({
+    email: 'joyce@email.com',
+    password: '123',
+    personalityType: 'Ostrich',
+  });
+  const sheri = await User.create({
+    email: 'sheri@email.com',
+    password: '123',
+    personalityType: 'Cash Splasher',
+  });
+
+  const joyceChaseChecking = await Account.create({
+    account_id: 'joyceChaseAccount',
+    current_balance: 5000,
+    available_balance: 5000,
+    name: 'Chase Checking',
+    userId: joyce.id,
+  });
+  const joyceChaseCredit = await Account.create({
+    account_id: 'joyceChaseCredit',
+    current_balance: 2000,
+    available_balance: 2000,
+    name: 'Chase Credit Card',
+    userId: joyce.id,
+  });
+  const joyceChaseSaving = await Account.create({
+    account_id: 'joyceChaseSaving',
+    current_balance: 10000,
+    available_balance: 10000,
+    name: 'Chase Saving',
+    userId: joyce.id,
+  });
+
+  const sheriChaseChecking = await Account.create({
+    account_id: 'sheriChaseChecking',
+    current_balance: 2000,
+    available_balance: 2000,
+    name: 'Chase Checking',
+    userId: sheri.id,
+  });
+  const sheriChaseCredit = await Account.create({
+    account_id: 'sheriChaseCredit',
+    current_balance: 500,
+    available_balance: 500,
+    name: 'Chase Credit Card',
+    userId: sheri.id,
+  });
+  const sheriChaseSaving = await Account.create({
+    account_id: 'sheriChaseSaving',
+    current_balance: 1500,
+    available_balance: 1500,
+    name: 'Chase Saving',
+    userId: sheri.id,
+  });
+
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'}),
-    User.create({email: '1', password: '1'})
-  ])
+    User.create({
+      email: 'cody@email.com',
+      password: '123',
+    }),
+    User.create({ email: '1', password: '1' }),
+  ]);
 
   const transactions = await Promise.all([
-    Transaction.create(
-      {
-        name: 'Starbucks',
-        amount: 10,
-        date: '2018-6-29',
-        category1: 'Food and Drink',
-        category2: 'Coffee Shop',
-        userId: 3
-      }
-  )])
+    Transaction.create({
+      name: 'Starbucks',
+      amount: 10,
+      date: '2018-6-29',
+      category1: 'Food and Drink',
+      category2: 'Coffee Shop',
+      userId: 3,
+    }),
+  ]);
 
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
+  console.log(`seeded ${users.length} users`);
+  console.log(`seeded successfully`);
 }
 
 // Execute the `seed` function, IF we ran this module directly (`node seed`).
@@ -50,22 +106,23 @@ async function seed () {
 // any errors that might occur inside of `seed`.
 if (module === require.main) {
   seed()
-  .catch(err => {
-    console.error(err)
-    process.exitCode = 1
-  })
-  .finally(() => { // `finally` is like then + catch. It runs no matter what.
-    console.log('closing db connection')
-    db.close()
-    console.log('db connection closed')
-  })
+    .catch(err => {
+      console.error(err);
+      process.exitCode = 1;
+    })
+    .finally(() => {
+      // `finally` is like then + catch. It runs no matter what.
+      console.log('closing db connection');
+      db.close();
+      console.log('db connection closed');
+    });
   /*
    * note: everything outside of the async function is totally synchronous
    * The console.log below will occur before any of the logs that occur inside
    * of the async function
    */
-  console.log('seeding...')
+  console.log('seeding...');
 }
 
 // we export the seed function for testing purposes (see `./seed.spec.js`)
-module.exports = seed
+module.exports = seed;
