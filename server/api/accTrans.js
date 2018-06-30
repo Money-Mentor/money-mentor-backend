@@ -34,9 +34,15 @@ router.get("/", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
   const id = req.params.id;
 
+  console.log('req.body======', req.body)
   try {
     const transaction = await Transaction.findById(id);
-    const newTransaction = await transaction.update({included: req.body.included, category: req.body.category});
+    const newTransaction = await transaction.update(
+      {
+        included: req.body.included,
+        category: req.body.category
+      }
+    );
     res.json(newTransaction);
   } catch (error) {
     next(error);
