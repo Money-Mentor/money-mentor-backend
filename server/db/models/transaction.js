@@ -20,7 +20,7 @@ const Transaction = db.define("transaction", {
   category2: {
     type: Sequelize.STRING
   },
-  include: {
+  included: {
     type: Sequelize.BOOLEAN,
     defaultValue: true
   }

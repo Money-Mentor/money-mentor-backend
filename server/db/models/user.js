@@ -31,6 +31,9 @@ const User = db.define('user', {
   personalityType: {
     type: Sequelize.STRING,
   },
+  pushToken: {
+    type: Sequelize.STRING
+  }
 });
 
 module.exports = User;
