@@ -2,7 +2,7 @@
 
 const db = require('../server/db');
 const { User, Transaction, Account, Item } = require('../server/db/models');
-const allTransactions = require('./transactionSeed')
+// const allTransactions = require('./transactionSeed')
 
 /**
  * Welcome to the seed file! This seed file uses a newer language feature called...
@@ -95,9 +95,9 @@ async function seed() {
   });
 
   /*-------------------- TRANSACTIONS ---------------------*/
-  const transactions = await Promise.all(
-    allTransactions.map(transaction => Transaction.create(transaction))
-  );
+  // const transactions = await Promise.all(
+  //   allTransactions.map(transaction => Transaction.create(transaction))
+  // );
 
   const users = await Promise.all([
     User.create({
@@ -121,7 +121,6 @@ async function seed() {
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
   console.log(`seeded ${users.length} users`);
-  console.log(`seeded ${transactions.length} transactions`);
   console.log(`seeded successfully`);
 }
 
