@@ -1,13 +1,13 @@
-const router = require('express').Router()
-const Account = require('../db/models/account');
-const Transaction = require('../db/models/transaction');
-const Budget = require('../db/models/budget')
+const router = require("express").Router();
+const Account = require("../db/models/account");
+const Transaction = require("../db/models/transaction");
+const Budget = require("../db/models/budget");
 
-module.exports = router
+module.exports = router;
 
 // api/accTrans - get all accounts and transactions from local DB
-router.get('/', async (req, res, next) => {
-  const user = req.user
+router.get("/", async (req, res, next) => {
+  const user = req.user;
   try {
     const accounts = await Account.findAll({
       where: {
@@ -24,19 +24,21 @@ router.get('/', async (req, res, next) => {
       where: {
         userId: user.id
       }
-    })
-    res.json({accounts, trans, budget})
-  } catch (err) { next(err) }
-})
+    });
+    res.json({ accounts, trans, budget });
+  } catch (err) {
+    next(err);
+  }
+});
 
-router.put('/:id', async (req, res, next) => {
-  const id = req.params.id
-
-    try {
+router.put("/:id", async (req, res, next) => {
+  const id = req.params.id;
+  console.log("req.body======", req.body);
+  try {
     const transaction = await Transaction.findById(id);
     const newTransaction = await transaction.update(req.body);
     res.json(newTransaction);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
