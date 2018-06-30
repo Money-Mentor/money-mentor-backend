@@ -107,7 +107,7 @@ async function seed() {
     User.create({ email: '1', password: '1' }),
   ]);
 
-  const trans = await Promise.all(
+  const trans = await Promise.all([
     Transaction.create({
       name: 'Starbucks',
       amount: 10,
