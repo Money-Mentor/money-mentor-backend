@@ -73,24 +73,6 @@ async function seed() {
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
 
-  const users = await Promise.all([
-    User.create({
-      email: 'cody@email.com',
-      password: '123',
-    }),
-    User.create({ email: '1', password: '1' }),
-  ]);
-
-  const trans = await Promise.all([
-    Transaction.create({
-      name: 'Starbucks',
-      amount: 10,
-      date: '2018-6-29',
-      category1: 'Food and Drink',
-      category2: 'Coffee Shop',
-      userId: 3,
-    }),
-  ]);
 
   /*-------------------- USERS ----------------------*/
   const joyce = await User.create({
@@ -172,7 +154,7 @@ async function seed() {
         amount: -2200,
         date: day,
         accountId: joyceChecking.account_id,
-        category: 'Transfer',
+        category1: 'Transfer',
         category2: 'Payroll',
         userId: joyce.id,
       };
@@ -183,7 +165,7 @@ async function seed() {
         amount: -500,
         date: day,
         accountId: joyceSaving.account_id,
-        category: 'Transfer',
+        category1: 'Transfer',
         category2: 'Payroll',
         userId: joyce.id,
       };
@@ -194,7 +176,7 @@ async function seed() {
         amount: 200,
         date: day,
         accountId: joyceChecking.account_id,
-        category: 'Payment',
+        category1: 'Payment',
         category2: 'Credit Card',
         userId: joyce.id,
       };
@@ -205,7 +187,7 @@ async function seed() {
         amount: 1500,
         date: day,
         accountId: joyceChecking.account_id,
-        category: 'Payment',
+        category1: 'Payment',
         category2: 'Rent',
         userId: joyce.id,
       };
@@ -216,7 +198,7 @@ async function seed() {
         amount: 50,
         date: day,
         accountId: joyceChecking.account_id,
-        category: 'Payment',
+        category1: 'Payment',
         category2: 'Electric Bill',
         userId: joyce.id,
       };
@@ -227,7 +209,7 @@ async function seed() {
         amount: randomAmountSmall(),
         date: day,
         accountId: joyceCredit.account_id,
-        category: 'Food and Drink',
+        category1: 'Food and Drink',
         category2: 'Coffee Shop',
         userId: joyce.id,
       };
@@ -238,7 +220,7 @@ async function seed() {
         amount: randomAmountSmall(),
         date: day,
         accountId: joyceCredit.account_id,
-        category: 'Food and Drink',
+        category1: 'Food and Drink',
         category2: 'Restaurants',
         userId: joyce.id,
       };
@@ -249,7 +231,7 @@ async function seed() {
         amount: randomAmount(),
         date: day,
         accountId: joyceCredit.account_id,
-        category: 'Shops',
+        category1: 'Shops',
         category2: 'Supermarkets and Groceries',
         userId: joyce.id,
       };
@@ -260,7 +242,7 @@ async function seed() {
         amount: randomAmount(),
         date: day,
         accountId: joyceCredit.account_id,
-        category: 'Shops',
+        category1: 'Shops',
         category2: 'Supermarkets and Groceries',
         userId: joyce.id,
       };
@@ -271,7 +253,7 @@ async function seed() {
         amount: randomAmount(),
         date: day,
         accountId: joyceCredit.account_id,
-        category: 'Food and Drink',
+        category1: 'Food and Drink',
         category2: 'Bar',
         userId: joyce.id,
       };
@@ -282,7 +264,7 @@ async function seed() {
         amount: randomAmount(),
         date: day,
         accountId: joyceCredit.account_id,
-        category: 'Travel',
+        category1: 'Travel',
         category2: 'Car Service',
         userId: joyce.id,
       };
@@ -293,7 +275,7 @@ async function seed() {
         amount: randomBigAmount(),
         date: day,
         accountId: joyceCredit.account_id,
-        category: 'Shops',
+        category1: 'Shops',
         category2: 'Clothing',
         userId: joyce.id,
       };
@@ -303,7 +285,7 @@ async function seed() {
       amount: 50,
       date: '2018-06-12',
       accountId: joyceCredit.account_id,
-      category: 'Shops',
+      category1: 'Shops',
       category2: 'Bicycles',
       userId: joyce.id,
     },
@@ -312,7 +294,7 @@ async function seed() {
       amount: 350,
       date: '2018-06-19',
       accountId: joyceCredit.account_id,
-      category: 'Travel',
+      category1: 'Travel',
       category2: 'Airlines and Aviation Services',
       userId: joyce.id,
     },
@@ -322,7 +304,7 @@ async function seed() {
         amount: 12,
         date: day,
         accountId: joyceCredit.account_id,
-        category: 'Service',
+        category1: 'Service',
         category2: 'Entertainment',
         userId: joyce.id,
       };
@@ -333,7 +315,7 @@ async function seed() {
         amount: 79,
         date: day,
         accountId: joyceCredit.account_id,
-        category: 'Recreation',
+        category1: 'Recreation',
         category2: 'Gyms and Fitness Centers',
         userId: joyce.id,
       };
@@ -345,7 +327,7 @@ async function seed() {
         amount: -2200,
         date: day,
         accountId: sheriChecking.account_id,
-        category: 'Transfer',
+        category1: 'Transfer',
         category2: 'Payroll',
         userId: sheri.id,
       };
@@ -356,7 +338,7 @@ async function seed() {
         amount: -500,
         date: day,
         accountId: sheriSaving.account_id,
-        category: 'Transfer',
+        category1: 'Transfer',
         category2: 'Payroll',
         userId: sheri.id,
       };
@@ -367,7 +349,7 @@ async function seed() {
         amount: 200,
         date: day,
         accountId: sheriChecking.account_id,
-        category: 'Payment',
+        category1: 'Payment',
         category2: 'Credit Card',
         userId: sheri.id,
       };
@@ -378,7 +360,7 @@ async function seed() {
         amount: 1500,
         date: day,
         accountId: sheriChecking.account_id,
-        category: 'Payment',
+        category1: 'Payment',
         category2: 'Rent',
         userId: sheri.id,
       };
@@ -389,7 +371,7 @@ async function seed() {
         amount: 50,
         date: day,
         accountId: sheriChecking.account_id,
-        category: 'Payment',
+        category1: 'Payment',
         category2: 'Electric Bill',
         userId: sheri.id,
       };
@@ -400,7 +382,7 @@ async function seed() {
         amount: randomAmountSmall(),
         date: day,
         accountId: sheriCredit.account_id,
-        category: 'Food and Drink',
+        category1: 'Food and Drink',
         category2: 'Coffee Shop',
         userId: sheri.id,
       };
@@ -411,7 +393,7 @@ async function seed() {
         amount: randomAmountSmall(),
         date: day,
         accountId: sheriCredit.account_id,
-        category: 'Food and Drink',
+        category1: 'Food and Drink',
         category2: 'Restaurants',
         userId: sheri.id,
       };
@@ -422,7 +404,7 @@ async function seed() {
         amount: randomAmount(),
         date: day,
         accountId: sheriCredit.account_id,
-        category: 'Shops',
+        category1: 'Shops',
         category2: 'Supermarkets and Groceries',
         userId: sheri.id,
       };
@@ -433,7 +415,7 @@ async function seed() {
         amount: randomAmount(),
         date: day,
         accountId: sheriCredit.account_id,
-        category: 'Shops',
+        category1: 'Shops',
         category2: 'Supermarkets and Groceries',
         userId: sheri.id,
       };
@@ -444,7 +426,7 @@ async function seed() {
         amount: randomAmount(),
         date: day,
         accountId: sheriCredit.account_id,
-        category: 'Food and Drink',
+        category1: 'Food and Drink',
         category2: 'Bar',
         userId: sheri.id,
       };
@@ -455,7 +437,7 @@ async function seed() {
         amount: randomAmount(),
         date: day,
         accountId: sheriCredit.account_id,
-        category: 'Travel',
+        category1: 'Travel',
         category2: 'Car Service',
         userId: sheri.id,
       };
@@ -466,7 +448,7 @@ async function seed() {
         amount: randomBigAmount(),
         date: day,
         accountId: sheriCredit.account_id,
-        category: 'Shops',
+        category1: 'Shops',
         category2: 'Clothing',
         userId: sheri.id,
       };
@@ -476,7 +458,7 @@ async function seed() {
       amount: 50,
       date: '2018-06-12',
       accountId: sheriCredit.account_id,
-      category: 'Shops',
+      category1: 'Shops',
       category2: 'Bicycles',
       userId: sheri.id,
     },
@@ -485,7 +467,7 @@ async function seed() {
       amount: 350,
       date: '2018-06-19',
       accountId: sheriCredit.account_id,
-      category: 'Travel',
+      category1: 'Travel',
       category2: 'Airlines and Aviation Services',
       userId: sheri.id,
     },
@@ -495,7 +477,7 @@ async function seed() {
         amount: 12,
         date: day,
         accountId: sheriCredit.account_id,
-        category: 'Service',
+        category1: 'Service',
         category2: 'Entertainment',
         userId: sheri.id,
       };
@@ -506,7 +488,7 @@ async function seed() {
         amount: 79,
         date: day,
         accountId: sheriCredit.account_id,
-        category: 'Recreation',
+        category1: 'Recreation',
         category2: 'Gyms and Fitness Centers',
         userId: sheri.id,
       };
@@ -516,6 +498,26 @@ async function seed() {
   const transactions = await Promise.all(
     allTransactions.map(transaction => Transaction.create(transaction))
   );
+
+
+  const users = await Promise.all([
+    User.create({
+      email: 'cody@email.com',
+      password: '123',
+    }),
+    User.create({ email: '1', password: '1' }),
+  ]);
+
+  const trans = await Promise.all([
+    Transaction.create({
+      name: 'Starbucks',
+      amount: 10,
+      date: '2018-6-29',
+      category1: 'Food and Drink',
+      category2: 'Coffee Shop',
+      userId: 3,
+    }),
+  ]);
 
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
