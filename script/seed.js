@@ -1,7 +1,13 @@
 'use strict';
 
 const db = require('../server/db');
-const { User, Transaction, Account, Item } = require('../server/db/models');
+const {
+  User,
+  Transaction,
+  Account,
+  Item,
+  Budget,
+} = require('../server/db/models');
 
 const taxiDateArr = doTimes(10);
 const dateArr = doTimes(30);
@@ -73,7 +79,6 @@ async function seed() {
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
 
-
   /*-------------------- USERS ----------------------*/
   const joyce = await User.create({
     email: 'joyce@email.com',
@@ -95,6 +100,23 @@ async function seed() {
     bank: 'bank of america',
     accessToken: 'access-sandbox-456',
   });
+  /*-------------------- BUDGET ----------------------*/
+  const budget = await Promise.all([
+    Budget.create({
+      income: 5000,
+      staticCosts: 1600,
+      savings: 1000,
+      spendingBudget: 5000 - 1600 - 1000,
+      userId: joyce.id,
+    }),
+    Budget.create({
+      income: 5500,
+      staticCosts: 1600,
+      savings: 1000,
+      spendingBudget: 5500 - 1600 - 1000,
+      userId: sheri.id,
+    }),
+  ]);
 
   /*-------------------- ACCOUNTS ----------------------*/
   const joyceChecking = await Account.create({
@@ -498,7 +520,6 @@ async function seed() {
   const transactions = await Promise.all(
     allTransactions.map(transaction => Transaction.create(transaction))
   );
-
 
   const users = await Promise.all([
     User.create({
