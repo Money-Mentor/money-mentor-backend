@@ -1,11 +1,13 @@
 const router = require('express').Router();
 const User = require('../db/models/user');
 const Budget = require('../db/models/budget');
+const moment = require('moment');
+
 module.exports = router;
 
 router.post('/login', (req, res, next) => {
   // EXPECT req.body TO ALSO HAVE pushToken
-  // console.log('PUSH TOKEN ===============================', req.body);
+  console.log('PUSH TOKEN ===============================', req.body.pushToken);
 
   User.findOne({ where: { email: req.body.email } })
     .then(user => {
@@ -17,7 +19,8 @@ router.post('/login', (req, res, next) => {
         res.status(401).send('Wrong username and/or password');
       } else {
         // SUCCESS!  USER IS CORRECT
-        // user.update({ pushToken: req.body.pushToken }); // now it's in the DB
+        let currentDate = moment().format('YYYY-MM-DD')
+        user.update({ pushToken: req.body.pushToken, lastLogin: currentDate }); // now token is saved in DB
         req.login(user, err => (err ? next(err) : res.json(user)));
       }
     })

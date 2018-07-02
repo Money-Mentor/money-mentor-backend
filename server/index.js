@@ -10,6 +10,13 @@ const db = require('./db');
 const sessionStore = new SequelizeStore({ db });
 const PORT = process.env.PORT || 8080;
 const app = express();
+
+// for push notification
+const moment = require('moment');
+const { findOstrich } = require('./userlookUp');
+const Expo = require('expo-server-sdk');
+let expo = new Expo();
+
 module.exports = app;
 
 /**
@@ -85,6 +92,61 @@ const startListening = () => {
 };
 
 const syncDb = () => db.sync();
+
+// ------------------- setInterval for sending pushNotificaitons ----------------------
+// let interval = 5000; //   need to use interval that user sets
+
+// setInterval(function() {
+//   let messages = [];
+
+//   (async () => {
+//     let ostrichArr = await findOstrich();
+
+//     for (let i = 0; i < ostrichArr.length; i++) {
+//       // check whether pushToken is valid
+//       if (!Expo.isExpoPushToken(ostrichArr[i].pushToken)) {
+//         console.error(
+//           `Push token ${ostrichArr[i].pushToken} is not a valid Expo push token`
+//         );
+//         continue;
+//       }
+
+//       // check if notification needs to be sent based on lastLogin & interval
+//       let userLastLogin = ostrichArr[i].lastLogin;
+//       // let userLastLoginDate = userLastLogin.toISOString().slice(0, 10);
+//       let currentDate = moment().toDate()//.format('YYYY-MM-DD');
+//       let difference = currentDate - userLastLogin
+
+//       console.log('userLastLogin', userLastLogin)
+//       // console.log('userLastLoginDate', userLastLoginDate)
+//       console.log('currentDate', currentDate)
+//       console.log('difference', difference);
+
+//       if (difference > interval) {
+//         // construct message
+//         messages.push({
+//           to: ostrichArr[i].pushToken,
+//           sound: 'default',
+//           body: 'This is a test notification',
+//           data: { withSome: 'data' },
+//         });
+//       }
+
+//       // batch up notifications to reduce number of requests
+//       let chunks = expo.chunkPushNotifications(messages);
+//       console.log('chunks==================', chunks);
+
+//       for (let chunk of chunks) {
+//         try {
+//           let receipts = await expo.sendPushNotificationsAsync(chunk);
+//           console.log(receipts);
+//         } catch (error) {
+//           console.error(error);
+//         }
+//       }
+//     }
+//   })();
+// }, interval);
 
 // This evaluates as true when this file is run directly from the command line,
 // i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', or 'nodemon server', etc)

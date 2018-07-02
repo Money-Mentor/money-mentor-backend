@@ -33,7 +33,10 @@ const User = db.define('user', {
   },
   pushToken: {
     type: Sequelize.STRING
-  }
+  },
+  lastLogin: {
+    type: Sequelize.DATE
+  },
 });
 
 module.exports = User;
