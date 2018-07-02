@@ -15,7 +15,7 @@ const payday = [
   '2018-05-11',
   '2018-05-25',
   '2018-06-08',
-  '2018-07-22',
+  '2018-06-22',
   '2018-07-06',
 ];
 const onceAMonth = ['2018-05-01', '2018-06-01', '2018-07-01'];
@@ -26,7 +26,7 @@ const coffeeShop = [
   'Bluestone Lane',
   'Joe and the Juice',
 ];
-const restaurant = ['Sweet Green', 'Open Market', 'Dig In', 'Go GO Curry'];
+const restaurant = ['Sweet Green', 'Open Market', 'Dig In', 'Go Go Curry'];
 const grocery = [
   'Whole Foods',
   `Trader Joe's`,
@@ -37,8 +37,8 @@ const shops = ['Zara', `Reformation`, 'Express', 'Club Monaco'];
 
 const taxi = ['Yellow Cab', 'Uber', 'Lyft', 'Juno'];
 
-function randomStore(store) {
-  return store[Math.floor(Math.random() * 4)];
+function randomStore(category) {
+  return category[Math.floor(Math.random() * category.length - 1)];
 }
 
 function randomDate(start, end) {
@@ -264,8 +264,8 @@ async function seed() {
         amount: randomAmount(),
         date: day,
         accountId: joyceCredit.account_id,
-        category1: 'Shops',
-        category2: 'Supermarkets and Groceries',
+        category1: 'Food and Drink',
+        category2: 'Bar',
         userId: joyce.id,
       };
     }),
@@ -275,8 +275,8 @@ async function seed() {
         amount: randomAmount(),
         date: day,
         accountId: joyceCredit.account_id,
-        category1: 'Food and Drink',
-        category2: 'Bar',
+        category1: 'Shops',
+        category2: 'Department Stores',
         userId: joyce.id,
       };
     }),
