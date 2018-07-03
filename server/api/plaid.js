@@ -32,7 +32,7 @@ const plaidClient = new plaid.Client(
 
 router.put('/', async (req, res, next) => {
   // put/:userid  maybe req.params.userid????
-  console.log('req.body', req.body);
+  
   const item = await Item.findOne({
     where: { userId: req.user.id }
   });
@@ -42,8 +42,6 @@ router.put('/', async (req, res, next) => {
 
   let startDate = item.createdAt.toISOString().slice(0, 10);
   let endDate = moment().format('YYYY-MM-DD');
-  console.log('start date', startDate);
-  console.log('end date', endDate);
 
   try {
     await plaidClient.getTransactions(
@@ -104,7 +102,7 @@ router.put('/', async (req, res, next) => {
     res.json({ accounts, trans });
   } catch (err) {
     // Indicates plaid API error
-    console.log('/exchange token returned an error', {
+    console.log('Exchange token returned an error', {
       error_type: err.error_type,
       error_code: res.statusCode,
       error_message: err.error_message,
@@ -216,7 +214,7 @@ router.post('/plaid_exchange', async (req, res, next) => {
     res.json({ accounts, trans, budget });
   } catch (err) {
     // Indicates plaid API error
-    console.log('/exchange token returned an error', {
+    console.log('Exchange token returned an error', {
       error_type: err.error_type,
       error_code: res.statusCode,
       error_message: err.error_message,
