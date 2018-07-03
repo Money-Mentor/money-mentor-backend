@@ -1,11 +1,10 @@
 const router = require('express').Router();
 const User = require('../db/models/user');
-const moment = require('moment');
+const LoginStreak = require('../db/models/loginStreak');
 
 module.exports = router;
 
 router.post('/login', (req, res, next) => {
-
   User.findOne({ where: { email: req.body.email } })
     .then(user => {
       if (!user) {
@@ -15,8 +14,10 @@ router.post('/login', (req, res, next) => {
         console.log('Incorrect password for user:', req.body.email);
         res.status(401).send('Wrong username and/or password');
       } else {
-        let currentDate = new Date()
+        let currentDate = new Date();
+        let userId = user.id;
         user.update({ pushToken: req.body.pushToken, lastLogin: currentDate });
+        LoginStreak.create({ userId, lastLogin: currentDate });
         req.login(user, err => (err ? next(err) : res.json(user)));
       }
     })
