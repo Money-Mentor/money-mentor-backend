@@ -33,12 +33,20 @@ const grocery = [
   'Westside Market',
   '55 Fulton Market',
 ];
-const shops = ['Zara', `Reformation`, 'Express', 'Club Monaco'];
+const shops = [
+  'Zara',
+  `Reformation`,
+  'Express',
+  'Club Monaco',
+  'Gap',
+  `Macy's`,
+  'Aldo',
+];
 
 const taxi = ['Yellow Cab', 'Uber', 'Lyft', 'Juno'];
 
 function randomStore(category) {
-  return category[Math.floor(Math.random() * category.length - 1)];
+  return category[Math.floor(Math.random() * category.length)];
 }
 
 function randomDate(start, end) {
