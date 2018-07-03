@@ -3,6 +3,7 @@ const Account = require('./account');
 const Item = require('./item');
 const Transaction = require('./transaction');
 const Budget = require('./budget');
+const LoginStreak = require('./loginStreak');
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -36,5 +37,6 @@ module.exports = {
   Account,
   Item,
   Transaction,
-  Budget
+  Budget,
+  LoginStreak,
 };
