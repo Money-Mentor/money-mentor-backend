@@ -37,6 +37,9 @@ const User = db.define('user', {
   lastLogin: {
     type: Sequelize.DATE
   },
+  reminderInterval: {
+    type: Sequelize.INTEGER
+  }
 });
 
 module.exports = User;

@@ -15,7 +15,10 @@ const app = express();
 const moment = require('moment');
 const { findOstrich } = require('./userlookUp');
 const Expo = require('expo-server-sdk');
-let expo = new Expo();
+const expo = new Expo();
+
+// node-schedule
+const schedule = require('node-schedule');
 
 module.exports = app;
 
@@ -93,60 +96,75 @@ const startListening = () => {
 
 const syncDb = () => db.sync();
 
-// ------------------- setInterval for sending pushNotificaitons ----------------------
-// let interval = 5000; //   need to use interval that user sets
+// ------------------------------ node-schedule -----------------------------------
 
-// setInterval(function() {
-//   let messages = [];
+// Schedule to run everyday at midnight
+const taskSchedule = new schedule.RecurrenceRule();
+// taskSchedule.hour = 24;
+// taskSchedule.dayOfWeek = new schedule.Range(0, 6);
 
-//   (async () => {
-//     let ostrichArr = await findOstrich();
+// For Testing - Job runs every minute
+taskSchedule.second = 0;
 
-//     for (let i = 0; i < ostrichArr.length; i++) {
-//       // check whether pushToken is valid
-//       if (!Expo.isExpoPushToken(ostrichArr[i].pushToken)) {
-//         console.error(
-//           `Push token ${ostrichArr[i].pushToken} is not a valid Expo push token`
-//         );
-//         continue;
-//       }
+function reportOnSchedule() {
+  let messages = [];
+  let interval = 'daily';
 
-//       // check if notification needs to be sent based on lastLogin & interval
-//       let userLastLogin = ostrichArr[i].lastLogin;
-//       // let userLastLoginDate = userLastLogin.toISOString().slice(0, 10);
-//       let currentDate = moment().toDate()//.format('YYYY-MM-DD');
-//       let difference = currentDate - userLastLogin
+  if (interval === 'daily') {
+    interval = 86400000;
+  } else if (interval === 'weekly') {
+    interval = 604800000;
+  } else {
+    interval = 1209600000;
+  }
 
-//       console.log('userLastLogin', userLastLogin)
-//       // console.log('userLastLoginDate', userLastLoginDate)
-//       console.log('currentDate', currentDate)
-//       console.log('difference', difference);
+  (async () => {
+    let ostrichArr = await findOstrich();
 
-//       if (difference > interval) {
-//         // construct message
-//         messages.push({
-//           to: ostrichArr[i].pushToken,
-//           sound: 'default',
-//           body: 'This is a test notification',
-//           data: { withSome: 'data' },
-//         });
-//       }
+    for (let i = 0; i < ostrichArr.length; i++) {
+      // check whether pushToken is valid
+      if (!Expo.isExpoPushToken(ostrichArr[i].pushToken)) {
+        console.error(
+          `Push token ${ostrichArr[i].pushToken} is not a valid Expo push token`
+        );
+        continue;
+      }
 
-//       // batch up notifications to reduce number of requests
-//       let chunks = expo.chunkPushNotifications(messages);
-//       console.log('chunks==================', chunks);
+      // check if notification needs to be sent based on lastLogin & interval
+      let userLastLogin = ostrichArr[i].lastLogin;
+      let currentDate = moment().toDate();
+      let difference = currentDate - userLastLogin;
 
-//       for (let chunk of chunks) {
-//         try {
-//           let receipts = await expo.sendPushNotificationsAsync(chunk);
-//           console.log(receipts);
-//         } catch (error) {
-//           console.error(error);
-//         }
-//       }
-//     }
-//   })();
-// }, interval);
+      if (difference > interval) {
+        console.log('difference', difference, interval);
+
+        // construct message
+        messages.push({
+          to: ostrichArr[i].pushToken,
+          sound: 'default',
+          body: `Hey! It's time to check- in to MoneyMentor!`,
+          data: { withSome: 'data' },
+        });
+      }
+    }
+    // batch up notifications to reduce number of requests
+    let chunks = expo.chunkPushNotifications(messages);
+
+    for (let chunk of chunks) {
+      try {
+        let receipts = await expo.sendPushNotificationsAsync(chunk);
+        console.log(receipts);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    console.log('The scheduled task ran');
+  })();
+}
+
+schedule.scheduleJob(taskSchedule, () => reportOnSchedule());
+console.log('The schdule has been initialzed');
+
 
 // This evaluates as true when this file is run directly from the command line,
 // i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', or 'nodemon server', etc)
