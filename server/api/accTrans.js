@@ -39,7 +39,7 @@ router.put("/:id", async (req, res, next) => {
     const newTransaction = await transaction.update(
       {
         included: req.body.included,
-        category: req.body.category
+        category1: req.body.category1
       }
     );
     res.json(newTransaction);
