@@ -33,6 +33,12 @@ const User = db.define('user', {
   },
   pushToken: {
     type: Sequelize.STRING
+  },
+  lastLogin: {
+    type: Sequelize.DATE
+  },
+  reminderInterval: {
+    type: Sequelize.INTEGER
   }
 });
 
