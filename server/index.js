@@ -103,7 +103,8 @@ const taskSchedule = new schedule.RecurrenceRule();
 // taskSchedule.hour = 24;
 // taskSchedule.dayOfWeek = new schedule.Range(0, 6);
 
-// For Testing - Job runs every minute
+// For Testing - Job runs every minute & will send notification to ostric users who havnt
+// logged in for a day
 taskSchedule.second = 0;
 
 function reportOnSchedule() {
@@ -136,8 +137,6 @@ function reportOnSchedule() {
       let difference = currentDate - userLastLogin;
 
       if (difference > interval) {
-        console.log('difference', difference, interval);
-
         // construct message
         messages.push({
           to: ostrichArr[i].pushToken,
@@ -158,13 +157,12 @@ function reportOnSchedule() {
         console.error(error);
       }
     }
-    console.log('The scheduled task ran');
+    // console.log('The scheduled task ran');
   })();
 }
 
 schedule.scheduleJob(taskSchedule, () => reportOnSchedule());
-console.log('The schdule has been initialzed');
-
+// console.log('The schdule has been initialzed');
 
 // This evaluates as true when this file is run directly from the command line,
 // i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', or 'nodemon server', etc)
