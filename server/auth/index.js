@@ -4,8 +4,8 @@ const Budget = require('../db/models/budget');
 module.exports = router;
 
 router.post('/login', (req, res, next) => {
+  console.log("INCOMING REQUEST", req.body)
   // EXPECT req.body TO ALSO HAVE pushToken
-  console.log('PUSH TOKEN ===============================', req.body);
 
   User.findOne({ where: { email: req.body.email } })
     .then(user => {
