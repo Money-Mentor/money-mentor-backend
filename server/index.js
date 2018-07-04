@@ -109,15 +109,6 @@ taskSchedule.second = 0;
 
 function reportOnSchedule() {
   let messages = [];
-  let interval = 'daily';
-
-  if (interval === 'daily') {
-    interval = 86400000;
-  } else if (interval === 'weekly') {
-    interval = 604800000;
-  } else {
-    interval = 1209600000;
-  }
 
   (async () => {
     let ostrichArr = await findOstrich();
@@ -136,7 +127,9 @@ function reportOnSchedule() {
       let currentDate = moment().toDate();
       let difference = currentDate - userLastLogin;
 
-      if (difference > interval) {
+      let interval = ostrichArr[i].reminderInterval
+
+      if (interval > 0 && difference > interval) {
         // construct message
         messages.push({
           to: ostrichArr[i].pushToken,
