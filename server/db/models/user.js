@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const Sequelize = require('sequelize');
 const db = require('../db');
-const Budget = require('./budget')
+const Budget = require('./budget');
 
 const User = db.define('user', {
   email: {
@@ -32,14 +32,18 @@ const User = db.define('user', {
     type: Sequelize.STRING,
   },
   pushToken: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
   lastLogin: {
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
   },
   reminderInterval: {
-    type: Sequelize.INTEGER
-  }
+    type: Sequelize.INTEGER,
+  },
+  streakType: {
+    type: Sequelize.STRING,
+    defaultValue: 'Restaurants',
+  },
 });
 
 module.exports = User;
@@ -52,8 +56,8 @@ User.prototype.correctPassword = function(candidatePwd) {
 };
 
 User.prototype.createBudget = function() {
-  return Budget.create({userId: this.id})
-}
+  return Budget.create({ userId: this.id });
+};
 
 /**
  * classMethods

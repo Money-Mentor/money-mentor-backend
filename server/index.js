@@ -150,7 +150,6 @@ function reportOnSchedule() {
         console.error(error);
       }
     }
-    // console.log('The scheduled task ran');
   })();
 }
 

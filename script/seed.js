@@ -33,12 +33,20 @@ const grocery = [
   'Westside Market',
   '55 Fulton Market',
 ];
-const shops = ['Zara', `Reformation`, 'Express', 'Club Monaco'];
+const shops = [
+  'Zara',
+  `Reformation`,
+  'Express',
+  'Club Monaco',
+  'Gap',
+  `Macy's`,
+  'Aldo',
+];
 
 const taxi = ['Yellow Cab', 'Uber', 'Lyft', 'Juno'];
 
 function randomStore(category) {
-  return category[Math.floor(Math.random() * category.length - 1)];
+  return category[Math.floor(Math.random() * category.length)];
 }
 
 function randomDate(start, end) {
@@ -84,11 +92,13 @@ async function seed() {
     email: 'joyce@email.com',
     password: '123',
     personalityType: 'Ostrich',
+    streakType: 'login',
   });
   const sheri = await User.create({
     email: 'sheri@email.com',
     password: '123',
     personalityType: 'Cash Splasher',
+    streakType: 'Clothing',
   });
 
   /*-------------------- ITEMS ----------------------*/
@@ -521,28 +531,9 @@ async function seed() {
     allTransactions.map(transaction => Transaction.create(transaction))
   );
 
-  const users = await Promise.all([
-    User.create({
-      email: 'cody@email.com',
-      password: '123',
-    }),
-    User.create({ email: '1', password: '1' }),
-  ]);
-
-  const trans = await Promise.all([
-    Transaction.create({
-      name: 'Starbucks',
-      amount: 10,
-      date: '2018-6-29',
-      category1: 'Food and Drink',
-      category2: 'Coffee Shop',
-      userId: 3,
-    }),
-  ]);
-
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
-  console.log(`seeded ${users.length} users`);
+  console.log(`seeded ${transactions.length} users`);
   console.log(`seeded successfully`);
 }
 
