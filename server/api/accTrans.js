@@ -34,7 +34,6 @@ router.get("/", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
   const id = req.params.id;
 
-  console.log('req.body======', req.body)
   try {
     const transaction = await Transaction.findById(id);
     const newTransaction = await transaction.update(
