@@ -64,7 +64,7 @@ function randomStore(category) {
 
 function randomDate(start, end) {
   var d = new Date(
-      start.getTime() + Math.random() * (end.getTime() - start.getTime())
+      start.getTime() + Math.random() * 2 * (end.getTime() - start.getTime())
     ),
     month = '' + d.getMonth(),
     day = '' + d.getDate(),
@@ -268,7 +268,7 @@ async function seed() {
         userId: joyce.id,
       };
     }),
-    ...dateArr.map(day => {
+    ...doTimes(30).map(day => {
       return {
         name: randomStore(coffeeShop),
         amount: randomAmountSmall(),
@@ -279,7 +279,7 @@ async function seed() {
         userId: joyce.id,
       };
     }),
-    ...dateArr.map(day => {
+    ...doTimes(30).map(day => {
       return {
         name: randomStore(restaurant),
         amount: randomAmountSmall(),
@@ -290,7 +290,7 @@ async function seed() {
         userId: joyce.id,
       };
     }),
-    ...dateArr.map(day => {
+    ...doTimes(30).map(day => {
       return {
         name: randomStore(grocery),
         amount: randomAmount(),
@@ -301,7 +301,7 @@ async function seed() {
         userId: joyce.id,
       };
     }),
-    ...dateArr.map(day => {
+    ...doTimes(30).map(day => {
       return {
         name: `Killarney Rose`,
         amount: randomAmount(),
@@ -312,7 +312,7 @@ async function seed() {
         userId: joyce.id,
       };
     }),
-    ...dateArr.map(day => {
+    ...doTimes(30).map(day => {
       return {
         name: `Amazon`,
         amount: randomAmount(),
@@ -323,7 +323,7 @@ async function seed() {
         userId: joyce.id,
       };
     }),
-    ...taxiDateArr.map(day => {
+    ...doTimes(15).map(day => {
       return {
         name: randomStore(taxi),
         amount: randomAmount(),
@@ -334,7 +334,7 @@ async function seed() {
         userId: joyce.id,
       };
     }),
-    ...taxiDateArr.map(day => {
+    ...doTimes(15).map(day => {
       return {
         name: randomStore(shops),
         amount: randomBigAmount(),
@@ -441,7 +441,7 @@ async function seed() {
         userId: sheri.id,
       };
     }),
-    ...dateArr.map(day => {
+    ...doTimes(30).map(day => {
       return {
         name: randomStore(coffeeShop),
         amount: randomAmountSmall(),
@@ -452,7 +452,7 @@ async function seed() {
         userId: sheri.id,
       };
     }),
-    ...dateArr.map(day => {
+    ...doTimes(30).map(day => {
       return {
         name: randomStore(restaurant),
         amount: randomAmountSmall(),
@@ -463,7 +463,7 @@ async function seed() {
         userId: sheri.id,
       };
     }),
-    ...dateArr.map(day => {
+    ...doTimes(30).map(day => {
       return {
         name: randomStore(grocery),
         amount: randomAmount(),
@@ -474,7 +474,7 @@ async function seed() {
         userId: sheri.id,
       };
     }),
-    ...dateArr.map(day => {
+    ...doTimes(30).map(day => {
       return {
         name: `Killarney Rose`,
         amount: randomAmount(),
@@ -485,7 +485,7 @@ async function seed() {
         userId: sheri.id,
       };
     }),
-    ...dateArr.map(day => {
+    ...doTimes(30).map(day => {
       return {
         name: `Amazon`,
         amount: randomAmount(),
@@ -496,7 +496,7 @@ async function seed() {
         userId: sheri.id,
       };
     }),
-    ...taxiDateArr.map(day => {
+    ...doTimes(10).map(day => {
       return {
         name: randomStore(taxi),
         amount: randomAmount(),
@@ -507,7 +507,7 @@ async function seed() {
         userId: sheri.id,
       };
     }),
-    ...taxiDateArr.map(day => {
+    ...doTimes(10).map(day => {
       return {
         name: randomStore(shops),
         amount: randomBigAmount(),
