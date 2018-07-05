@@ -7,9 +7,11 @@ const {
   Account,
   Item,
   Budget,
+  LoginStreak,
 } = require('../server/db/models');
 
 const taxiDateArr = doTimes(10);
+const loginDateArr = doTimes(60).map(date => new Date(date));
 const dateArr = doTimes(30);
 const payday = [
   '2018-05-11',
@@ -25,8 +27,16 @@ const coffeeShop = [
   'Gregorys Coffee',
   'Bluestone Lane',
   'Joe and the Juice',
+  'La Colombe Coffee Roasters',
 ];
-const restaurant = ['Sweet Green', 'Open Market', 'Dig In', 'Go Go Curry'];
+const restaurant = [
+  'Sweet Green',
+  'Open Market',
+  'Dig In',
+  'Go Go Curry',
+  `Chop't`,
+  'Oaxaca Taqueria',
+];
 const grocery = [
   'Whole Foods',
   `Trader Joe's`,
@@ -41,6 +51,9 @@ const shops = [
   'Gap',
   `Macy's`,
   'Aldo',
+  'Zee DOG',
+  'Artizia',
+  'REI',
 ];
 
 const taxi = ['Yellow Cab', 'Uber', 'Lyft', 'Juno'];
@@ -53,7 +66,7 @@ function randomDate(start, end) {
   var d = new Date(
       start.getTime() + Math.random() * (end.getTime() - start.getTime())
     ),
-    month = '' + (d.getMonth() + 1),
+    month = '' + d.getMonth(),
     day = '' + d.getDate(),
     year = d.getFullYear();
 
@@ -70,6 +83,7 @@ function doTimes(n) {
   }
   return results;
 }
+
 function randomBigAmount() {
   return Math.floor(Math.random() * 40) + 30;
 }
@@ -92,7 +106,7 @@ async function seed() {
     email: 'joyce@email.com',
     password: '123',
     personalityType: 'Ostrich',
-    streakType: 'login',
+    streakType: 'Login',
   });
   const sheri = await User.create({
     email: 'sheri@email.com',
@@ -110,6 +124,25 @@ async function seed() {
     bank: 'bank of america',
     accessToken: 'access-sandbox-456',
   });
+
+  /*-------------------- Login ----------------------*/
+  const loginData = [
+    ...loginDateArr.map(day => {
+      return {
+        lastLogin: day,
+        userId: joyce.id,
+      };
+    }),
+    ...loginDateArr.map(day => {
+      return {
+        lastLogin: day,
+        userId: sheri.id,
+      };
+    }),
+  ];
+
+  await Promise.all(loginData.map(login => LoginStreak.create(login)));
+
   /*-------------------- BUDGET ----------------------*/
   const budget = await Promise.all([
     Budget.create({

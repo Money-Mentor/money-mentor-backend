@@ -35,6 +35,7 @@ router.post('/signup', async (req, res, next) => {
     } else {
       next(err);
     }
+
   }
 });
 
