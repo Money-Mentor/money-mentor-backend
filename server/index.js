@@ -111,6 +111,7 @@ function reportOnSchedule() {
   let messages = [];
 
   (async () => {
+    console.log('made it into reportOnSchedule ========================================')
     let ostrichArr = await findOstrich();
 
     for (let i = 0; i < ostrichArr.length; i++) {
@@ -134,7 +135,8 @@ function reportOnSchedule() {
         messages.push({
           to: ostrichArr[i].pushToken,
           sound: 'default',
-          body: `Hey! It's time to check- in to MoneyMentor!`,
+          title: 'Money Mentor',
+          body: `Hey! It's time to check-in!`,
           data: { withSome: 'data' },
         });
       }
@@ -154,7 +156,7 @@ function reportOnSchedule() {
 }
 
 schedule.scheduleJob(taskSchedule, () => reportOnSchedule());
-// console.log('The schdule has been initialzed');
+console.log('The schdule has been initialzed');
 
 // This evaluates as true when this file is run directly from the command line,
 // i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', or 'nodemon server', etc)
