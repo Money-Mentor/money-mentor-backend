@@ -10,9 +10,7 @@ const {
   LoginStreak,
 } = require('../server/db/models');
 
-const taxiDateArr = doTimes(10);
 const loginDateArr = doTimes(60).map(date => new Date(date));
-const dateArr = doTimes(30);
 const payday = [
   '2018-05-11',
   '2018-05-25',
@@ -480,8 +478,8 @@ async function seed() {
         amount: randomAmount(),
         date: day,
         accountId: sheriCredit.account_id,
-        category1: 'Shops',
-        category2: 'Supermarkets and Groceries',
+        category1: 'Food and Drink',
+        category2: 'Bar',
         userId: sheri.id,
       };
     }),
@@ -490,10 +488,10 @@ async function seed() {
         name: `Amazon`,
         amount: randomAmount(),
         date: day,
-        accountId: sheriCredit.account_id,
-        category1: 'Food and Drink',
-        category2: 'Bar',
-        userId: sheri.id,
+        accountId: joyceCredit.account_id,
+        category1: 'Shops',
+        category2: 'Department Stores',
+        userId: joyce.id,
       };
     }),
     ...doTimes(10).map(day => {
